@@ -29,7 +29,7 @@ Camera.prototype.GetViewMatrix = function()
 	rotMatrix = rotMatrix.x(rz);
 
 	var direction = rotMatrix.multiply(Vector.FORWARD).normalize();
-	var lookAt = direction.add(this.transform.position);
+	var lookAt = direction.add(this.transform.position.to4D());
 
 	var lx = lookAt.e(1);
 	var ly = lookAt.e(2);

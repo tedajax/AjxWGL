@@ -7,11 +7,11 @@ ShaderManager.prototype.PushShader = function(shader)
 {
 	for (var i = 0, len = this.shaders.length; i < len; i++)
 		if (this.shaders[i].name === shader.name)
-			return false;
+			return null;
 
 	this.shaders.push(shader);
 
-	return true;
+	return shader;
 };
 
 ShaderManager.prototype.GetShader = function(name)

@@ -262,6 +262,17 @@ Sylvester.Vector.prototype = {
     return V;
   },
 
+  to4D: function() {
+    var V = this.dup();
+    switch (V.elements.length) {
+      case 4: break;
+      case 3: V.elements.push(0); break;
+      case 2: V.elements.push(0); V.elements.push(0); break;
+      default: return null; 
+    }
+    return V;
+  },
+
   inspect: function() {
     return '[' + this.elements.join(', ') + ']';
   },

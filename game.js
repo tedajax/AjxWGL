@@ -1,13 +1,17 @@
 function Game(canvas)
 {
 	Game.canvas = canvas;
+	window.gl = new GLInit(canvas);
 
 	this.camera = new Camera();
+
+	Game.camera = this.camera;
+
 	this.camera.GetViewMatrix();
 
-	
+	this.basicfx = Shaders().PushShader(new BasicShader());
 
-	window.gl = new GL(canvas);
+	this.gameObjects = [];
 };
 
 Game.prototype.Initialize = function()
@@ -20,7 +24,8 @@ Game.prototype.Initialize = function()
 
 Game.prototype.Update = function()
 {
-
+	for (var i = 0, len = this.gameObjects.length; i < len; i++)
+		this.gameObjects[i].Update();
 };
 
 Game.prototype.Render = function()
@@ -28,10 +33,10 @@ Game.prototype.Render = function()
 	gl.viewport(0, 0, canvas.width, canvas.height);
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-	gl.projection = this.camera.GetProjectionMatrix();
-	gl.view = this.camera.GetViewMatrix();
+	Shaders().FrameDrawSetup();
 
-	
+	for (var i = 0, len = this.gameObjects.length; i < len; i++)
+		this.gameObjects[i].Render();
 };
 
 Game.prototype.Unload = function()

@@ -1,6 +1,7 @@
 function Shader()
 {
-	Shader.SHADER_DIR = "Assets/Shaders/";
+	// Shader.SHADER_DIR = "Assets/Shaders/";
+	Shader.SHADER_DIR = "";
 
 	this.name = "Shader";
 

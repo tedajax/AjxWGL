@@ -9,3 +9,13 @@ function Transform()
 	this.world = Matrix.I(4);
 };
 
+Transform.prototype.GetWorldMatrix = function()
+{
+	var tMat = Matrix.Translation(this.position);
+	var rMat = Matrix.YawPitchRoll(this.rotation);
+	var sMat = Matrix.Scale(this.scale);
+
+	this.world = sMat.x(rMat).x(tMat);
+
+	return this.world;
+};

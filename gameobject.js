@@ -7,6 +7,19 @@ function GameObject()
     this.shader;
 };
 
+GameObject.prototype.SetShader = function(name)
+{
+	var shader = Shaders().GetShader(name);
+
+	if (shader !== null && shader !== undefined)
+	{
+		this.shader = shader;
+		return true;
+	}
+
+	return false;
+};
+
 GameObject.prototype.Initialize = function()
 {
     
@@ -17,12 +30,7 @@ GameObject.prototype.Update = function()
 
 };
 
-GameObject.prototype.ShaderSetup = function()
-{
-	
-};
-
-GameObject.prototype.Draw = function()
+GameObject.prototype.Render = function()
 {
 	
 };

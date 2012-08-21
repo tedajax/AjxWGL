@@ -4,7 +4,7 @@ function BasicShader()
 {
 	this.Shader();
 
-	this.name = "BasicShader";
+	this.name = "basic";
 
 	this.pMatrix = Matrix.I(4);
 	this.vMatrix = Matrix.I(4);
@@ -26,7 +26,7 @@ BasicShader.prototype.VertFileString = function()
 BasicShader.prototype.InitLocales = function()
 {
 	this.program.vertexPositionAttribute = gl.getAttribLocation(this.program, "aVertexPosition");
-	this.program.enableVertexAttribArray(this.program.vertexPositionAttribute);
+	gl.enableVertexAttribArray(this.program.vertexPositionAttribute);
 
 	this.program.projMatrixUniform = gl.getUniformLocation(this.program, "uProjection");
 	this.program.viewMatrixUniform = gl.getUniformLocation(this.program, "uView");
@@ -37,6 +37,9 @@ BasicShader.prototype.FrameDrawSetup = function()
 {
 	gl.uniformMatrix4fv(this.program.projMatrixUniform, false, new Float32Array(this.pMatrix.flatten()));
 	gl.uniformMatrix4fv(this.program.viewMatrixUniform, false, new Float32Array(this.vMatrix.flatten()));
+
+	this.pMatrix = Game.camera.GetProjectionMatrix();
+	this.vMatrix = Game.camera.GetViewMatrix();
 };
 
 BasicShader.prototype.DrawSetup = function()

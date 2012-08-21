@@ -1,17 +1,11 @@
-var gl;
-
 function GL(canvas)
 {
-	gl = canvas.getContext("experimental-webgl");
+	var context = canvas.getContext("experimental-webgl");
 
-	if (!GL.ctx)
-		alert("Failed to initialize WebGL");
+	context.viewportWidth = canvas.width;
+	context.viewportHeight = canvas.height;
+	context.view = Matrix.I(4);
+	context.projection = Matrix.I(4);
 
-	GL.viewportWidth = canvas.width;
-	GL.viewportHeight = canvas.height;
-
-	GL.model = Matrix.I(4);
-	GL.view = Matrix.I(4);
-	GL.projection = Matrix.I(4);
+	return context
 };
-

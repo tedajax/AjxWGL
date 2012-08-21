@@ -2,6 +2,9 @@ var Sylvester = {
   precision: 1e-6
 };
 
+Sylvester.Deg2Rad = Math.PI / 180.0;
+Sylvester.Rad2Deg = 180.0 / Math.PI;
+
 Sylvester.Vector = function() {};
 
 Sylvester.Vector.create = function(elements) {
@@ -20,6 +23,11 @@ Sylvester.Vector.Zero = function(n) {
   var elements = [];
   while (n--) { elements.push(0); }
   return Sylvester.Vector.create(elements);
+};
+
+Sylvester.Vector.Negate = function(v) {
+  var V = $V(v.elements);
+  return V.map(function(x) { return -x; });
 };
 
 Sylvester.Vector.prototype = {
@@ -62,6 +70,12 @@ Sylvester.Vector.prototype = {
     for (var i = 0; i < n; i++) {
       fn.call(context, this.elements[i], i+1);
     }
+  },
+
+  normalize: function() {
+    var r = this.modulus();
+    if (r === 0) { return this.dup(); }
+    return this.map(function(x) { return x/r; });
   },
 
   toUnitVector: function() {
@@ -255,6 +269,18 @@ Sylvester.Vector.prototype = {
   setElements: function(els) {
     this.elements = (els.elements || els).slice();
     return this;
+  },
+
+  set: function(index, value) {
+    if (index < 1 || index > this.elements.length) { return null; }
+    this.elements[index - 1] = value;
+    return this;
+  },
+
+  move: function(index, value) {
+    if (index < 1 || index > this.elements.length) { return null; }
+    this.elements[index - 1] += value;
+    return this;
   }
 };
 
@@ -264,6 +290,13 @@ Sylvester.Vector.prototype.each = Sylvester.Vector.prototype.forEach;
 Sylvester.Vector.i = Sylvester.Vector.create([1,0,0]);
 Sylvester.Vector.j = Sylvester.Vector.create([0,1,0]);
 Sylvester.Vector.k = Sylvester.Vector.create([0,0,1]);
+
+Sylvester.Vector.RIGHT = Sylvester.Vector.i;
+Sylvester.Vector.LEFT = Sylvester.Vector.Negate(Sylvester.Vector.i);
+Sylvester.Vector.UP = Sylvester.Vector.j;
+Sylvester.Vector.DOWN = Sylvester.Vector.Negate(Sylvester.Vector.j);
+Sylvester.Vector.FORWARD = Sylvester.Vector.Negate(Sylvester.Vector.k);
+Sylvester.Vector.BACKWARD = Sylvester.Vector.k;
 
 Sylvester.Matrix = function() {};
 
@@ -294,6 +327,7 @@ Sylvester.Matrix.Diagonal = function(elements) {
 };
 
 Sylvester.Matrix.Rotation = function(theta, a) {
+  theta *= Sylvester.Deg2Rad;
   if (!a) {
     return Sylvester.Matrix.create([
       [Math.cos(theta),  -Math.sin(theta)],
@@ -316,27 +350,33 @@ Sylvester.Matrix.Rotation = function(theta, a) {
 };
 
 Sylvester.Matrix.RotationX = function(t) {
+  t *= Sylvester.Deg2Rad;
   var c = Math.cos(t), s = Math.sin(t);
   return Sylvester.Matrix.create([
-    [  1,  0,  0 ],
-    [  0,  c, -s ],
-    [  0,  s,  c ]
+    [  1,  0,  0,  0],
+    [  0,  c, -s,  0 ],
+    [  0,  s,  c,  0 ],
+    [  0,  0,  0,  1 ]
   ]);
 };
 Sylvester.Matrix.RotationY = function(t) {
+  t *= Sylvester.Deg2Rad;
   var c = Math.cos(t), s = Math.sin(t);
   return Sylvester.Matrix.create([
-    [  c,  0,  s ],
-    [  0,  1,  0 ],
-    [ -s,  0,  c ]
+    [  c,  0,  s,  0 ],
+    [  0,  1,  0,  0 ],
+    [ -s,  0,  c,  0 ],
+    [  0,  0,  0,  1 ]
   ]);
 };
 Sylvester.Matrix.RotationZ = function(t) {
+  t *= Sylvester.Deg2Rad;
   var c = Math.cos(t), s = Math.sin(t);
   return Sylvester.Matrix.create([
-    [  c, -s,  0 ],
-    [  s,  c,  0 ],
-    [  0,  0,  1 ]
+    [  c, -s,  0,  0 ],
+    [  s,  c,  0,  0 ],
+    [  0,  0,  1,  0 ],
+    [  0,  0,  0,  1 ]
   ]);
 };
 
@@ -462,7 +502,11 @@ Sylvester.Matrix.prototype = {
     }
     var returnVector = matrix.modulus ? true : false;
     var M = matrix.elements || matrix;
-    if (typeof(M[0][0]) === 'undefined') { M = Sylvester.Matrix.create(M).elements; }
+    if (typeof(M[0][0]) === 'undefined') { 
+      if (M.length === 3)
+        M.push(0);
+      M = Sylvester.Matrix.create(M).elements; 
+    }
     if (!this.canMultiplyFromLeft(M)) { return null; }
     var i = this.elements.length, nj = M[0].length, j;
     var cols = this.elements[0].length, c, elements = [], sum;

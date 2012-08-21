@@ -100,7 +100,7 @@ function mht(m) {
 //
 // gluLookAt
 //
-function makeLookAt(ex, ey, ez,
+function gluLookAt(ex, ey, ez,
                     cx, cy, cz,
                     ux, uy, uz)
 {
@@ -129,7 +129,7 @@ function makeLookAt(ex, ey, ez,
 //
 // glOrtho
 //
-function makeOrtho(left, right,
+function glOrtho(left, right,
                    bottom, top,
                    znear, zfar)
 {
@@ -146,20 +146,20 @@ function makeOrtho(left, right,
 //
 // gluPerspective
 //
-function makePerspective(fovy, aspect, znear, zfar)
+function gluPerspective(fovy, aspect, znear, zfar)
 {
     var ymax = znear * Math.tan(fovy * Math.PI / 360.0);
     var ymin = -ymax;
     var xmin = ymin * aspect;
     var xmax = ymax * aspect;
 
-    return makeFrustum(xmin, xmax, ymin, ymax, znear, zfar);
+    return gluFrustum(xmin, xmax, ymin, ymax, znear, zfar);
 }
 
 //
 // glFrustum
 //
-function makeFrustum(left, right,
+function gluFrustum(left, right,
                      bottom, top,
                      znear, zfar)
 {
@@ -174,19 +174,4 @@ function makeFrustum(left, right,
                [0, Y, B, 0],
                [0, 0, C, D],
                [0, 0, -1, 0]]);
-};
-
-//
-// glOrtho
-//
-function makeOrtho(left, right, bottom, top, znear, zfar)
-{
-    var tx = - (right + left) / (right - left);
-    var ty = - (top + bottom) / (top - bottom);
-    var tz = - (zfar + znear) / (zfar - znear);
-
-    return $M([[2 / (right - left), 0, 0, tx],
-               [0, 2 / (top - bottom), 0, ty],
-               [0, 0, -2 / (zfar - znear), tz],
-               [0, 0, 0, 1]]);
 };

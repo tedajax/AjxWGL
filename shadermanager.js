@@ -31,9 +31,7 @@ ShaderManager.prototype.CleanShaders = function()
 ShaderManager.prototype.FrameDrawSetup = function()
 {
 	for (var i = 0, len = this.shaders.length; i < len; i++)
-	{
 		this.shaders[i].FrameDrawSetup();
-	}
 };
 
 function Shaders()

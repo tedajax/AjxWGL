@@ -5,6 +5,8 @@ function Game(canvas)
 	this.camera = new Camera();
 	this.camera.GetViewMatrix();
 
+	
+
 	window.gl = new GL(canvas);
 };
 
@@ -26,7 +28,10 @@ Game.prototype.Render = function()
 	gl.viewport(0, 0, canvas.width, canvas.height);
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-	gl.projection = gluPerspective(70, Game.canvas.width / Game.canvas.height, 1, 1000);
+	gl.projection = this.camera.GetProjectionMatrix();
+	gl.view = this.camera.GetViewMatrix();
+
+	
 };
 
 Game.prototype.Unload = function()

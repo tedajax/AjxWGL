@@ -2,6 +2,8 @@ function Shader()
 {
 	Shader.SHADER_DIR = "Assets/Shaders/";
 
+	this.name = "Shader";
+
 	this.program;
 	this.Initialize();
 };
@@ -66,6 +68,15 @@ Shader.prototype.VertFileString = function()
 	return Util.GetFileString(Shader.SHADER_DIR + "basic-vs.glsl");
 };
 
+
+//update uniforms that only need to be changed once per frame here
+Shader.prototype.FrameDrawSetup = function()
+{
+
+};
+
+
+//update uniforms that need to be changed per object here
 Shader.prototype.DrawSetup = function()
 {
 

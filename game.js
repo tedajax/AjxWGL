@@ -12,6 +12,9 @@ function Game(canvas)
 	this.basicfx = Shaders().PushShader(new BasicShader());
 
 	this.gameObjects = [];
+	this.gameObjects.push(new Cube());
+
+	this.camera.transform.position = $V([0.0, 0.0, 10.0]);
 };
 
 Game.prototype.Initialize = function()

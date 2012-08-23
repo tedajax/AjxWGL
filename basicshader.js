@@ -34,12 +34,12 @@ BasicShader.prototype.InitLocales = function()
 };
 
 BasicShader.prototype.FrameDrawSetup = function()
-{
-	gl.uniformMatrix4fv(this.program.projMatrixUniform, false, new Float32Array(this.pMatrix.flatten()));
-	gl.uniformMatrix4fv(this.program.viewMatrixUniform, false, new Float32Array(this.vMatrix.flatten()));
-
+{t
 	this.pMatrix = Game.camera.GetProjectionMatrix();
 	this.vMatrix = Game.camera.GetViewMatrix();
+
+	gl.uniformMatrix4fv(this.program.projMatrixUniform, false, new Float32Array(this.pMatrix.flatten()));
+	gl.uniformMatrix4fv(this.program.viewMatrixUniform, false, new Float32Array(this.vMatrix.flatten()));
 };
 
 BasicShader.prototype.DrawSetup = function()

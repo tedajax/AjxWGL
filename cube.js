@@ -1,4 +1,4 @@
-Util.CreateInheritance(GameObject, Cube);
+Util.CreateInheritance(Cube, GameObject);
 
 function Cube(size)
 {
@@ -35,18 +35,42 @@ function Cube(size)
 		[1, 2, 5],
 		[2, 6, 5]
 	];	
+
+	this.vertexBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.vertices), gl.STATIC_DRAW);
+	this.vertexBuffer.itemSize = 3;
+	this.vertexBuffer.numItems = this.vertices.length / 3;
+
+	this.numIndices = this.indices.length;
+	this.indexBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indices), gl.STREAM_DRAW);
+	this.indexBuffer.itemSize = 1;
+	this.indexBuffer.numItems = this.numIndices;
 };
 
 Cube.prototype.Update = function()
 {
-
+	this.transform.position.add(Vector.FORWARD.x(0.1 * Time.Delta()));
 };
 
 Cube.prototype.Render = function()
 {
-	gl.useProgram(this.shader);
+	gl.useProgram(this.shader.program);
 
 	this.shader.wMatrix = this.transform.GetWorldMatrix();
 
 	this.shader.DrawSetup();
+
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
+	gl.vertexAttribPointer(this.shader.program.vertexPositionAttribute,
+						   this.vertexBuffer.itemSize,
+						   gl.FLOAT,
+						   false,
+						   0,
+						   0);
+
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+	gl.drawElements(gl.TRIANGLE_STRIP, this.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 };

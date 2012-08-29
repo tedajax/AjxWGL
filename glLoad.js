@@ -1,9 +1,16 @@
-function GLInit(canvas)
+function GL(canvas)
 {
-	var context = canvas.getContext("experimental-webgl");
-
-	context.viewportWidth = canvas.width;
-	context.viewportHeight = canvas.height;
+	this.context = canvas.getContext("experimental-webgl");
 	
-	return context
+	this.context.viewportWidth = canvas.width;
+	this.context.viewportHeight = canvas.height;
 };
+
+GL.getInstance = function(canvas) 
+{
+	if (!GL._instance) 
+		GL._instance = new GL(canvas);
+	return GL._instance;
+};
+
+gl = function(canvas) { return GL.getInstance(canvas).context; };

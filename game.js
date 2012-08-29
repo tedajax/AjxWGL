@@ -1,8 +1,9 @@
 function Game(canvas)
 {
 	Game.canvas = canvas;
-	window.gl = new GLInit(canvas);
 
+	gl(Game.canvas);
+	
 	this.camera = new Camera();
 
 	Game.camera = this.camera;
@@ -14,15 +15,15 @@ function Game(canvas)
 	this.gameObjects = [];
 	this.gameObjects.push(new Cube());
 
-	this.camera.transform.position = $V([0.0, 0.0, 10.0]);
+	this.camera.transform.position = $V([0.0, 0.0, -10.0]);
 };
 
 Game.prototype.Initialize = function()
 {
-	gl.enable(gl.DEPTH_TEST);
-	gl.depthFunc(gl.LEQUAL);
-	gl.clearColor(0.0, 0.0, 0.0, 1.0);
-	gl.clearDepth(1.0);
+	gl().enable(gl().DEPTH_TEST);
+	gl().depthFunc(gl().LEQUAL);
+	gl().clearColor(0.0, 0.0, 0.0, 1.0);
+	gl().clearDepth(1.0);
 };
 
 Game.prototype.Update = function()
@@ -33,8 +34,8 @@ Game.prototype.Update = function()
 
 Game.prototype.Render = function()
 {
-	gl.viewport(0, 0, canvas.width, canvas.height);
-	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	gl().viewport(0, 0, gl().viewportWidthwidth, gl().viewportHeight);
+	gl().clear(gl().COLOR_BUFFER_BIT | gl().DEPTH_BUFFER_BIT);
 
 	Shaders().FrameDrawSetup();
 

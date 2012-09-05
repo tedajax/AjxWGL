@@ -14,6 +14,7 @@ function Game(canvas)
 
 	this.gameObjects = [];
 	this.gameObjects.push(new Cube());
+	this.gameObjects.push(new GLQuad());
 
 	this.camera.transform.position = $V([0.0, 0.0, -10.0]);
 };

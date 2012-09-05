@@ -257,6 +257,7 @@ Sylvester.Vector.prototype = {
     switch (V.elements.length) {
       case 3: break;
       case 2: V.elements.push(0); break;
+      case 4: V.elements.remove(3); break;
       default: return null;
     }
     return V;

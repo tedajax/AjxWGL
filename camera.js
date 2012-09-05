@@ -48,15 +48,13 @@ Camera.prototype.GetViewMatrix = function()
 
 Camera.prototype.GetProjectionMatrix = function()
 {
-	return gluPerspective(this.fov, this.aspect, this.near, this.far);
-
 	//TODO: this stuff
-	// if (this.cameraType === Camera.PERSPECTIVE)
-	// {
-
-	// }
-	// else
-	// {
-
-	// }
+	if (this.cameraType === Camera.PERSPECTIVE)
+	{
+		return gluPerspective(this.fov, this.aspect, this.near, this.far);
+	}
+	else
+	{
+		return glOrtho(-1, 1, -1, 1, this.near, this.far);
+	}
 };

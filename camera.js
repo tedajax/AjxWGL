@@ -5,12 +5,12 @@ function Camera()
 	Camera.ORTHOGRAPHIC = 0;
 	Camera.PERSPECTIVE = 1;
 
-	this.cameraType = Camera.ORTHOGRAPHIC;
+	this.cameraType = Camera.PERSPECTIVE;
 
 	this.fov = 70;
 	this.aspect = gl().viewportWidth / gl().viewportHeight;
-	this.near = 0;
-	this.far = 1;
+	this.near = 0.1;
+	this.far = 100;
 };
 
 Camera.prototype.LookAt = function(lookat)
@@ -50,9 +50,10 @@ Camera.prototype.GetViewMatrix = function()
 	var uy = up.e(2);
 	var uz = up.e(3);
 
-	return gluLookAt(ex, ey, ez,
-					 lx, ly, lz,
-			  		 ux, uy, uz);
+	// return gluLookAt(ex, ey, ez,
+	// 				 lx, ly, lz,
+	// 		  		 ux, uy, uz);
+	return gluLookAt(0, 0, -10, 0, 0, 0, 0, 1, 0);
 };
 
 Camera.prototype.GetProjectionMatrix = function()

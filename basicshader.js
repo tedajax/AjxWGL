@@ -48,5 +48,6 @@ BasicShader.prototype.FrameDrawSetup = function()
 
 BasicShader.prototype.DrawSetup = function()
 {
+	gl().useProgram(this.program);
 	gl().uniformMatrix4fv(this.program.worldMatrixUniform, false, new Float32Array(this.wMatrix.flatten()));
 };

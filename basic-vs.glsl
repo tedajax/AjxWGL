@@ -6,5 +6,5 @@ attribute vec3 aVertexPosition;
 
 void main()
 {
-	gl_Position = uProjection * uWorld * uView * vec4(aVertexPosition, 1.0);
+	gl_Position = uProjection * uView * uWorld * vec4(aVertexPosition, 1.0);
 }

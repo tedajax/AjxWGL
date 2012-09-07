@@ -6,10 +6,10 @@ function GLQuad()
 	this.SetShader("basic");
 
 	this.vertices = [
-		-1,  1,  1
-		-1, -1,  1,
-		 1, -1,  1,
-		 1,  1,  1
+		-1,  1,  0,
+		-1, -1,  0,
+		 1, -1,  0,
+		 1,  1,  0
 	];
 
 	this.indices = [
@@ -28,8 +28,6 @@ function GLQuad()
 	gl().bufferData(gl().ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indices), gl().STATIC_DRAW);
 	this.indexBuffer.itemSize = 3;
 	this.indexBuffer.numItems = this.indices.length / this.indexBuffer.itemSize;
-
-	this.transform.position = $V([0, 0, -1]);
 };
 
 GLQuad.prototype.Update = function()

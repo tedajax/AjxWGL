@@ -5,12 +5,21 @@ function Camera()
 	Camera.ORTHOGRAPHIC = 0;
 	Camera.PERSPECTIVE = 1;
 
-	this.cameraType = Camera.PERSPECTIVE;
+	this.cameraType = Camera.ORTHOGRAPHIC;
 
 	this.fov = 70;
 	this.aspect = gl().viewportWidth / gl().viewportHeight;
-	this.near = 1;
-	this.far = 1000;
+	this.near = 0;
+	this.far = 1;
+};
+
+Camera.prototype.LookAt = function(lookat)
+{
+	yawdiff = Math.atan2(lookat.e(3) - this.transform.position.e(3), lookat.e(1) - this.transform.position.e(1)) + Math.PI;
+	xzdist = Math.sqrt(Math.pow(lookat.e(1) - this.transform.position.e(1), 2) + Math.pow(lookat.e(3) - this.transform.position.e(3), 2));
+	pitchdiff = Math.atan2(lookat.e(2) - this.transform.position.e(2), xzdist);
+
+	this.transform.rotation = $V([pitchdiff, yawdiff, this.transform.rotation.e(3)]);
 };
 
 Camera.prototype.GetViewMatrix = function()

@@ -13,10 +13,10 @@ function Game(canvas)
 	this.basicfx = Shaders().PushShader(new BasicShader());
 
 	this.gameObjects = [];
-	this.gameObjects.push(new Cube());
+	//this.gameObjects.push(new Cube());
 	this.gameObjects.push(new GLQuad());
 
-	this.camera.transform.position = $V([0.0, 0.0, -10.0]);
+	this.camera.transform.position = $V([0.0, 0.0, 0.0]);
 };
 
 Game.prototype.Initialize = function()
@@ -35,7 +35,7 @@ Game.prototype.Update = function()
 
 Game.prototype.Render = function()
 {
-	gl().viewport(0, 0, gl().viewportWidthwidth, gl().viewportHeight);
+	gl().viewport(0, 0, Game.canvas.width, Game.canvas.height);
 	gl().clear(gl().COLOR_BUFFER_BIT | gl().DEPTH_BUFFER_BIT);
 
 	Shaders().FrameDrawSetup();

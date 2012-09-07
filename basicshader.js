@@ -25,6 +25,8 @@ BasicShader.prototype.VertFileString = function()
 
 BasicShader.prototype.InitLocales = function()
 {
+	gl().useProgram(this.program);
+
 	this.program.vertexPositionAttribute = gl().getAttribLocation(this.program, "aVertexPosition");
 	gl().enableVertexAttribArray(this.program.vertexPositionAttribute);
 
@@ -35,6 +37,8 @@ BasicShader.prototype.InitLocales = function()
 
 BasicShader.prototype.FrameDrawSetup = function()
 {
+	gl().useProgram(this.program);
+
 	this.pMatrix = Game.camera.GetProjectionMatrix();
 	this.vMatrix = Game.camera.GetViewMatrix();
 

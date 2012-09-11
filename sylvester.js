@@ -303,12 +303,12 @@ Sylvester.Vector.i = Sylvester.Vector.create([1,0,0]);
 Sylvester.Vector.j = Sylvester.Vector.create([0,1,0]);
 Sylvester.Vector.k = Sylvester.Vector.create([0,0,1]);
 
-Sylvester.Vector.RIGHT = Sylvester.Vector.i;
-Sylvester.Vector.LEFT = Sylvester.Vector.Negate(Sylvester.Vector.i);
-Sylvester.Vector.UP = Sylvester.Vector.j;
-Sylvester.Vector.DOWN = Sylvester.Vector.Negate(Sylvester.Vector.j);
-Sylvester.Vector.FORWARD = Sylvester.Vector.Negate(Sylvester.Vector.k);
-Sylvester.Vector.BACKWARD = Sylvester.Vector.k;
+Sylvester.Vector.RIGHT = Sylvester.Vector.i.to3D();
+Sylvester.Vector.LEFT = Sylvester.Vector.Negate(Sylvester.Vector.i).to3D();
+Sylvester.Vector.UP = Sylvester.Vector.j.to3D();
+Sylvester.Vector.DOWN = Sylvester.Vector.Negate(Sylvester.Vector.j).to3D();
+Sylvester.Vector.FORWARD = Sylvester.Vector.Negate(Sylvester.Vector.k).to3D();
+Sylvester.Vector.BACKWARD = Sylvester.Vector.k.to3D();
 
 Sylvester.Matrix = function() {};
 

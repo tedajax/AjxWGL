@@ -50,10 +50,10 @@ Camera.prototype.GetViewMatrix = function()
 	var uy = up.e(2);
 	var uz = up.e(3);
 
-	// return gluLookAt(ex, ey, ez,
-	// 				 lx, ly, lz,
-	// 		  		 ux, uy, uz);
-	return gluLookAt(0, 0, -10, 0, 0, 0, 0, 1, 0);
+	 return gluLookAt(ex, ey, ez,
+	 				 lx, ly, lz,
+	 		  		 ux, uy, uz);
+	//return gluLookAt(0, 0, -10, 0, 0, 0, 0, 1, 0);
 };
 
 Camera.prototype.GetProjectionMatrix = function()

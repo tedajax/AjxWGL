@@ -26,7 +26,7 @@ function GLQuad()
 	this.indexBuffer = gl().createBuffer();
 	gl().bindBuffer(gl().ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 	gl().bufferData(gl().ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indices), gl().STATIC_DRAW);
-	this.indexBuffer.itemSize = 3;
+	this.indexBuffer.itemSize = 1;
 	this.indexBuffer.numItems = this.indices.length / this.indexBuffer.itemSize;
 };
 
@@ -52,5 +52,5 @@ GLQuad.prototype.Render = function()
 							 0);
 
 	gl().bindBuffer(gl().ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-	gl().drawElements(gl().TRIANGLE_LIST, this.indexBuffer.numItems, gl().UNSIGNED_SHORT, 0);
+	gl().drawElements(gl().TRIANGLES, this.indexBuffer.numItems, gl().UNSIGNED_SHORT, 0);
 };

@@ -19,3 +19,38 @@ Transform.prototype.GetWorldMatrix = function()
 
 	return this.world;
 };
+
+Transform.prototype.TransformUnitVector = function(unitv)
+{
+	return Matrix.YawPitchRoll(this.rotation).x(unitv);
+};
+
+Transform.prototype.Right = function()
+{
+	return this.TransformUnitVector(Vector.RIGHT);
+};
+
+Transform.prototype.Left = function()
+{
+	return this.TransformUnitVector(Vector.LEFT);
+};
+
+Transform.prototype.Forward = function()
+{
+	return this.TransformUnitVector(Vector.FORWARD);
+};
+
+Transform.prototype.Backward = function()
+{
+	return this.TransformUnitVector(Vector.BACKWARD);
+};
+
+Transform.prototype.Up = function()
+{
+	return this.TransformUnitVector(Vector.UP);
+};
+
+Transform.prototype.Down = function()
+{
+	return this.TransformUnitVector(Vector.DOWN);
+};

@@ -32,21 +32,21 @@ Game.prototype.Initialize = function()
 Game.prototype.Update = function()
 {
 	if (Input.GetKey(Keys.D))
-		this.camera.transform.position = this.camera.transform.position.add(Vector.RIGHT.x(this.cameraSpeed * Time.Delta()).to3D());
+		this.camera.transform.position = this.camera.transform.position.add(this.camera.transform.Right().x(this.cameraSpeed * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.A))
-		this.camera.transform.position = this.camera.transform.position.add(Vector.LEFT.x(this.cameraSpeed * Time.Delta()).to3D());
+		this.camera.transform.position = this.camera.transform.position.add(this.camera.transform.Left().x(this.cameraSpeed * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.W))
-		this.camera.transform.position = this.camera.transform.position.add(Vector.FORWARD.x(this.cameraSpeed * Time.Delta()).to3D());
+		this.camera.transform.position = this.camera.transform.position.add(this.camera.transform.Forward().x(this.cameraSpeed * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.S))
-		this.camera.transform.position = this.camera.transform.position.add(Vector.BACKWARD.x(this.cameraSpeed * Time.Delta()).to3D());
+		this.camera.transform.position = this.camera.transform.position.add(this.camera.transform.Backward().x(this.cameraSpeed * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.UP))
-		this.camera.transform.position = this.camera.transform.position.add(Vector.UP.x(this.cameraSpeed * Time.Delta()).to3D());
+		this.camera.transform.position = this.camera.transform.position.add(this.camera.transform.Up().x(this.cameraSpeed * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.DOWN))
-		this.camera.transform.position = this.camera.transform.position.add(Vector.DOWN.x(this.cameraSpeed * Time.Delta()).to3D());
+		this.camera.transform.position = this.camera.transform.position.add(this.camera.transform.Down().x(this.cameraSpeed * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.LEFT))
-		this.camera.transform.rotation = this.camera.transform.rotation.add(Vector.UP.x(45 * Time.Delta()).to3D());
+		this.camera.transform.rotation = this.camera.transform.rotation.add(Vector.UP.x(90 * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.RIGHT))
-		this.camera.transform.rotation = this.camera.transform.rotation.add(Vector.UP.x(-45 * Time.Delta()).to3D());
+		this.camera.transform.rotation = this.camera.transform.rotation.add(Vector.UP.x(-90 * Time.Delta()).to3D());
 
 	for (var i = 0, len = this.gameObjects.length; i < len; i++)
 		this.gameObjects[i].Update();

@@ -10,7 +10,7 @@ function Camera()
 	this.fov = 70;
 	this.aspect = gl().viewportWidth / gl().viewportHeight;
 	this.near = 0.1;
-	this.far = 100;
+	this.far = 1000;
 };
 
 Camera.prototype.LookAt = function(lookat)

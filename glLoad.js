@@ -10,19 +10,24 @@ function logGLCall(functionName, args)
 
 function GL(canvas)
 {
-	this.context = canvas.getContext("experimental-webgl");
-	
+	this.context = canvas.getContext(
+		"experimental-webgl",
+		{
+			alpha: false
+		}
+	);
+
 	this.context.viewportWidth = canvas.width;
 	this.context.viewportHeight = canvas.height;
 
 	this.context = WebGLDebugUtils.makeDebugContext(this.context, logGLCall, undefined);
 };
 
-GL.getInstance = function(canvas) 
+GL.GetInstance = function(canvas) 
 {
 	if (!GL._instance) 
 		GL._instance = new GL(canvas);
 	return GL._instance;
 };
 
-gl = function(canvas) { return GL.getInstance(canvas).context; };
+gl = function(canvas) { return GL.GetInstance(canvas).context; };

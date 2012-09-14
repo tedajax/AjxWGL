@@ -1,9 +1,8 @@
-Util.CreateInheritance(Cube, GameObject);
+Util.CreateInheritance(Cube, Renderable);
 
 function Cube(size)
 {
-	this.GameObject();
-
+	this.Renderable();
 	this.SetShader("basic");
 
 	this.cubeSize = ((size) ? size : 1);
@@ -21,12 +20,23 @@ function Cube(size)
 		 h,  h, -h   //7
 	];
 
+	this.colors = [
+		1.0, 0.0, 0.0, 1.0, //0
+		0.0, 1.0, 0.0, 1.0, //1
+		0.0, 0.0, 1.0, 1.0, //2
+		1.0, 1.0, 0.0, 1.0, //3
+		1.0, 0.0, 1.0, 1.0, //4
+		0.0, 1.0, 1.0, 1.0, //5
+		1.0, 1.0, 1.0, 1.0, //6
+		0.0, 0.0, 0.0, 1.0  //7
+	];
+
 	this.indices = [
 		0, 2, 1,
 		0, 3, 2,
 		3, 6, 2,
 		3, 7, 6,
-		7, 5, 6,
+		4, 5, 6,
 		7, 4, 6,
 		4, 1, 5,
 		4, 0, 1,
@@ -36,35 +46,14 @@ function Cube(size)
 		2, 6, 5
 	];	
 
-	// this.vertices = [
-	// 	-1, 0, 0,
-	// 	0, 1, 0,
-	// 	1, 0, 0
-	// ];
-
-	// this.indices = [
-	// 	0, 1, 2
-	// ];
-
-	this.vertexBuffer = gl().createBuffer();
-	gl().bindBuffer(gl().ARRAY_BUFFER, this.vertexBuffer);
-	gl().bufferData(gl().ARRAY_BUFFER, new Float32Array(this.vertices), gl().STATIC_DRAW);
-	this.vertexBuffer.itemSize = 3;
-	this.vertexBuffer.numItems = this.vertices.length / this.vertexBuffer.itemSize;
-
-	this.indexBuffer = gl().createBuffer();
-	gl().bindBuffer(gl().ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-	gl().bufferData(gl().ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indices), gl().STATIC_DRAW);
-	this.indexBuffer.itemSize = 1;
-	this.indexBuffer.numItems = this.indices.length / this.indexBuffer.itemSize;
-
-	this.frame = 0;
+	this.CreateBuffers();
 };
 
-Cube.prototype.Update = function()
+Cube.prototype.CreateBuffers = function()
 {
-	//movement = Vector.FORWARD.x(1 * Time.Delta()).to3D();
-	//this.transform.position = this.transform.position.add(movement);
+	this.vertexBuffer = R().CreateBuffer(this.vertices, gl().ARRAY_BUFFER, gl().STATIC_DRAW);
+	this.colorBuffer = R().CreateBuffer(this.colors, gl().ARRAY_BUFFER, gl().STATIC_DRAW, 4);
+	this.indexBuffer = R().CreateBuffer(this.indices, gl().ELEMENT_ARRAY_BUFFER, gl().STATIC_DRAW);
 };
 
 Cube.prototype.Render = function()
@@ -76,12 +65,20 @@ Cube.prototype.Render = function()
 	this.shader.DrawSetup();
 
 	gl().bindBuffer(gl().ARRAY_BUFFER, this.vertexBuffer);
-	gl().vertexAttribPointer(this.shader.program.vertexPositionAttribute,
+	gl().vertexAttribPointer(this.shader.attribs["position"],
 						   	 this.vertexBuffer.itemSize,
 						     gl().FLOAT,
 						   	 false,
 						   	 0,
 						   	 0);
+
+	gl().bindBuffer(gl().ARRAY_BUFFER, this.colorBuffer);
+	gl().vertexAttribPointer(this.shader.attribs["color"],
+							 this.colorBuffer.itemSize,
+							 gl().FLOAT,
+							 false,
+							 0,
+							 0);
 
 	gl().bindBuffer(gl().ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 	gl().drawElements(gl().TRIANGLES, this.indexBuffer.numItems, gl().UNSIGNED_SHORT, 0);

@@ -29,8 +29,3 @@ GameObject.prototype.Update = function()
 {
 
 };
-
-GameObject.prototype.Render = function()
-{
-	
-};

@@ -7,6 +7,20 @@ function Shader()
 
 	this.program;
 	this.Initialize();
+
+	this.attribs = [];
+	this.uniforms = [];
+};
+
+Shader.prototype.AddAttribute = function(name, location)
+{
+	this.attribs[name] = location;
+	gl().enableVertexAttribArray(this.attribs[name]);
+};
+
+Shader.prototype.AddUniform = function(name, location)
+{
+	this.uniforms[name] = location;
 };
 
 Shader.prototype.Initialize = function ()

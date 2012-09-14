@@ -1,4 +1,4 @@
-Util.CreateInheritance(GLQuad, GameObject);
+Util.CreateInheritance(GLQuad, Renderable);
 
 function GLQuad()
 {

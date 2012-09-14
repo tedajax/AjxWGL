@@ -27,12 +27,12 @@ BasicShader.prototype.InitLocales = function()
 {
 	gl().useProgram(this.program);
 
-	this.program.vertexPositionAttribute = gl().getAttribLocation(this.program, "aVertexPosition");
-	gl().enableVertexAttribArray(this.program.vertexPositionAttribute);
-
-	this.program.projMatrixUniform = gl().getUniformLocation(this.program, "uProjection");
-	this.program.viewMatrixUniform = gl().getUniformLocation(this.program, "uView");
-	this.program.worldMatrixUniform = gl().getUniformLocation(this.program, "uWorld");
+	this.AddAttribute("position", gl().getAttribLocation(this.program, "aVertexPosition"));
+	this.AddAttribute("color", gl().getAttribLocation(this.program, "aVertexColor"));
+	
+	this.AddUniform("projection", gl().getUniformLocation(this.program, "uProjection"));
+	this.AddUniform("view", gl().getUniformLocation(this.program, "uView"));
+	this.AddUniform("world", gl().getUniformLocation(this.program, "uWorld"));
 };
 
 BasicShader.prototype.FrameDrawSetup = function()
@@ -42,12 +42,12 @@ BasicShader.prototype.FrameDrawSetup = function()
 	this.pMatrix = Game.camera.GetProjectionMatrix();
 	this.vMatrix = Game.camera.GetViewMatrix();
 
-	gl().uniformMatrix4fv(this.program.projMatrixUniform, false, new Float32Array(this.pMatrix.flatten()));
-	gl().uniformMatrix4fv(this.program.viewMatrixUniform, false, new Float32Array(this.vMatrix.flatten()));
+	gl().uniformMatrix4fv(this.uniforms["projection"], false, new Float32Array(this.pMatrix.flatten()));
+	gl().uniformMatrix4fv(this.uniforms["view"], false, new Float32Array(this.vMatrix.flatten()));
 };
 
 BasicShader.prototype.DrawSetup = function()
 {
 	gl().useProgram(this.program);
-	gl().uniformMatrix4fv(this.program.worldMatrixUniform, false, new Float32Array(this.wMatrix.flatten()));
+	gl().uniformMatrix4fv(this.uniforms["world"], false, new Float32Array(this.wMatrix.flatten()));
 };

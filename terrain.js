@@ -27,28 +27,29 @@ Terrain.prototype.BuildFromImage = function(img)
 {
 	imgCanvas = document.createElement("canvas");
 	imgContext = imgCanvas.getContext("2d");
+	imgCanvas.width = img.width;
+	imgCanvas.height = img.height;
 	imgContext.width = img.width;
 	imgContext.height = img.height;
 	imgContext.drawImage(img, 0, 0);
 
 	var heightData = imgContext.getImageData(0, 0, imgContext.width, imgContext.height);
 
+	console.log(heightData.data[(240 * heightData.width + 0) * 4]);
+
 	var width = heightData.width, height = heightData.height;
-	console.log(heightData);
 	
 	this.heightData = heightData.data;
 	var current = 0;
-	var index = 0;
+	var index = 1;
 
 	for (var x = 0; x < width; x++)
 	{
 		for (var y = 0; y < height; y++)
 		{
 			var hd = this.heightData[index];
-			index+=4;
+			index += 4;
 			var h = hd / 255.0;
-
-			if (y === 0) console.log(x + " : " + h);
 
 			this.vertices[current++] = x;
 			this.vertices[current++] = h;

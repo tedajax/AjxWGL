@@ -27,12 +27,12 @@ BasicShader.prototype.InitLocales = function()
 {
 	gl().useProgram(this.program);
 
-	this.AddAttribute("position", gl().getAttribLocation(this.program, "aVertexPosition"));
-	this.AddAttribute("color", gl().getAttribLocation(this.program, "aVertexColor"));
+	this.AddAttribute("position", "aVertexPosition");
+	this.AddAttribute("color", "aVertexColor");
 	
-	this.AddUniform("projection", gl().getUniformLocation(this.program, "uProjection"));
-	this.AddUniform("view", gl().getUniformLocation(this.program, "uView"));
-	this.AddUniform("world", gl().getUniformLocation(this.program, "uWorld"));
+	this.AddUniform("projection", "uProjection");
+	this.AddUniform("view", "uView");
+	this.AddUniform("world", "uWorld");
 };
 
 BasicShader.prototype.FrameDrawSetup = function()

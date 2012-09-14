@@ -12,15 +12,15 @@ function Shader()
 	this.uniforms = [];
 };
 
-Shader.prototype.AddAttribute = function(name, location)
+Shader.prototype.AddAttribute = function(name, attribute)
 {
-	this.attribs[name] = location;
+	this.attribs[name] = gl().getAttribLocation(this.program, attribute);
 	gl().enableVertexAttribArray(this.attribs[name]);
 };
 
-Shader.prototype.AddUniform = function(name, location)
+Shader.prototype.AddUniform = function(name, uniform)
 {
-	this.uniforms[name] = location;
+	this.uniforms[name] = gl().getUniformLocation(this.program, uniform);
 };
 
 Shader.prototype.Initialize = function ()

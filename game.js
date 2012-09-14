@@ -33,7 +33,7 @@ Game.prototype.Initialize = function()
 	gl().enable(gl().BLEND);	
 	gl().blendFunc(gl().SRC_ALPHA, gl().ONE_MINUS_SRC_ALPHA);
 
-	gl().clearColor(0.0, 0.0, 0.0, 1.0);
+	gl().clearColor(0.3, 0.3, 0.3, 1.0);
 	gl().clearDepth(1.0);
 };
 

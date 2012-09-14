@@ -21,7 +21,7 @@ function Game(canvas)
 	terrain.BuildFromHeightmap("heightmap.png");
 	R().Add(terrain);
 
-	this.cameraSpeed = 5.0;
+	this.cameraSpeed = 25.0;
 
 	this.camera.transform.position = $V([0.0, 2.0, 10.0]);
 };
@@ -52,9 +52,9 @@ Game.prototype.Update = function()
 	if (Input.GetKey(Keys.DOWN))
 		this.camera.transform.position = this.camera.transform.position.add(this.camera.transform.Down().x(this.cameraSpeed * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.LEFT))
-		this.camera.transform.rotation = this.camera.transform.rotation.add(Vector.UP.x(90 * Time.Delta()).to3D());
+		this.camera.transform.rotation = this.camera.transform.rotation.add(Vector.UP.x(180 * Time.Delta()).to3D());
 	if (Input.GetKey(Keys.RIGHT))
-		this.camera.transform.rotation = this.camera.transform.rotation.add(Vector.UP.x(-90 * Time.Delta()).to3D());
+		this.camera.transform.rotation = this.camera.transform.rotation.add(Vector.UP.x(-180 * Time.Delta()).to3D());
 
 	for (var i = 0, len = this.gameObjects.length; i < len; i++)
 		this.gameObjects[i].Update();

@@ -46,8 +46,9 @@ Terrain.prototype.BuildFromImage = function(img)
 		{
 			var hd = this.heightData[index];
 			index+=4;
-			if (x === 0) console.log(hd);
 			var h = hd / 255.0;
+
+			if (y === 0) console.log(x + " : " + h);
 
 			this.vertices[current++] = x;
 			this.vertices[current++] = h;
@@ -91,7 +92,7 @@ Terrain.prototype.BuildFromImage = function(img)
 
 	this.loaded = true;
 
-	this.transform.scale = $V([1.0, 10.0, 1.0]);
+	this.transform.scale = $V([1.0, 32.0, 1.0]);
 };
 
 Terrain.prototype.Render = function()

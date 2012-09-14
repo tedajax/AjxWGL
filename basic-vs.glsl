@@ -13,6 +13,6 @@ void main()
 	gl_Position = uProjection * uView * uWorld * vec4(aVertexPosition, 1.0);
 
 	vVertexColor.r = aVertexPosition.y;
-	vVertexColor.g = aVertexPosition.y;
+	vVertexColor.g = 0.5;
 	vVertexColor.b = aVertexPosition.y;
 }

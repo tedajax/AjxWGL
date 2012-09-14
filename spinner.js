@@ -12,5 +12,4 @@ Spinner.prototype.Update = function()
 {
 	this.transform.rotation = this.transform.rotation.add(Vector.UP.to3D().x(0 * Time.Delta()));
 	this.model.transform = this.transform;
-	this.model.Hide();
 };

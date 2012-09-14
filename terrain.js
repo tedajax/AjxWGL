@@ -17,7 +17,7 @@ Terrain.prototype.BuildFromHeightmap = function(imgstring)
 
 	heightImage.onload = function()
 	{
-		terrain.BuildFromImage(heightImage);
+		this.terrain.BuildFromImage(heightImage);
 	};
 
 	heightImage.src = imgstring;
@@ -35,8 +35,6 @@ Terrain.prototype.BuildFromImage = function(img)
 
 	var heightData = imgContext.getImageData(0, 0, imgContext.width, imgContext.height);
 
-	console.log(heightData.data[(240 * heightData.width + 0) * 4]);
-
 	var width = heightData.width, height = heightData.height;
 	
 	this.heightData = heightData.data;
@@ -51,9 +49,9 @@ Terrain.prototype.BuildFromImage = function(img)
 			index += 4;
 			var h = hd / 255.0;
 
-			this.vertices[current++] = x;
-			this.vertices[current++] = h;
 			this.vertices[current++] = y;
+			this.vertices[current++] = h;
+			this.vertices[current++] = -x;
 		}
 	}
 
@@ -93,6 +91,7 @@ Terrain.prototype.BuildFromImage = function(img)
 
 	this.loaded = true;
 
+	this.transform.position = $V([-width / 2.0, 0.0, height / 2.0]);
 	this.transform.scale = $V([1.0, 32.0, 1.0]);
 };
 

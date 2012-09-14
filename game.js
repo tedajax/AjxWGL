@@ -17,9 +17,7 @@ function Game(canvas)
 	//this.gameObjects.push(new Cube());
 	//this.gameObjects.push(new GLQuad());
 
-	terrain = new Terrain();
-	terrain.BuildFromHeightmap("heightmap.png");
-	R().Add(terrain);
+	this.gameObjects.push(new TerrainController());
 
 	this.cameraSpeed = 25.0;
 
@@ -33,7 +31,7 @@ Game.prototype.Initialize = function()
 	gl().enable(gl().BLEND);	
 	gl().blendFunc(gl().SRC_ALPHA, gl().ONE_MINUS_SRC_ALPHA);
 
-	gl().clearColor(0.3, 0.3, 0.3, 1.0);
+	gl().clearColor(0.0, 0.0, 0.0, 1.0);
 	gl().clearDepth(1.0);
 };
 

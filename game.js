@@ -11,6 +11,7 @@ function Game(canvas)
 	this.camera.GetViewMatrix();
 
 	this.basicfx = Shaders().PushShader(new BasicShader());
+	this.terrainfx = Shaders().PushShader(new TerrainShader());
 
 	this.gameObjects = [];
 	this.gameObjects.push(new Spinner());

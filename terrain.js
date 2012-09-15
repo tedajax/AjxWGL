@@ -3,7 +3,7 @@ Util.CreateInheritance(Terrain, Renderable);
 function Terrain()
 {
 	this.Renderable();
-	this.SetShader("basic");
+	this.SetShader("terrain");
 
 	this.loaded = false;
 
@@ -87,12 +87,43 @@ Terrain.prototype.BuildFromImage = function(img)
 		}
 	}
 
+	current = 0;
+	for (var i = 0, len = this.indices.length / 3; i < len; i++)
+	{
+		i1 = this.indices[i * 3];
+		i2 = this.indices[i * 3 + 1];
+		i3 = this.indices[i * 3 + 2];
+
+		vertex1 = new Vec3(this.vertices[i1 + 0], this.vertices[i1 + 1], this.vertices[i1 + 2]);
+		vertex2 = new Vec3(this.vertices[i2 + 0], this.vertices[i2 + 1], this.vertices[i2 + 2]);
+		vertex3 = new Vec3(this.vertices[i3 + 0], this.vertices[i3 + 1], this.vertices[i3 + 2]);
+
+		side1 = Vec3.Sub(vertex1, vertex3);
+		side2 = Vec3.Sub(vertex1, vertex2);
+
+		normal = Vec3.Cross(side1, side2);
+
+		this.normals[current++] = normal.x;
+		this.normals[current++] = normal.y;
+		this.normals[current++] = normal.z;
+	}
+
+	console.log(this.vertices.length, this.normals.length);
+
 	this.CreateBuffers();
 
 	this.loaded = true;
 
 	this.transform.position = $V([-width / 2.0, 0.0, height / 2.0]);
-	this.transform.scale = $V([1.0, 32.0, 1.0]);
+	this.transform.scale = $V([1.0, 64.0, 1.0]);
+};
+
+Renderable.prototype.CreateBuffers = function()
+{
+	this.vertexBuffer = R().CreateBuffer(this.vertices, gl().ARRAY_BUFFER, gl().STATIC_DRAW);
+	this.normalBuffer = R().CreateBuffer(this.normals, gl().ARRAY_BUFFER, gl().STATIC_DRAW);
+	this.colorBuffer = R().CreateBuffer(this.colors, gl().ARRAY_BUFFER, gl().STATIC_DRAW, 4);
+	this.indexBuffer = R().CreateBuffer(this.indices, gl().ELEMENT_ARRAY_BUFFER, gl().STATIC_DRAW);
 };
 
 Terrain.prototype.Render = function()
@@ -111,6 +142,13 @@ Terrain.prototype.Render = function()
 						   	 false,
 						   	 0,
 						   	 0);
+
+	gl().bindBuffer(gl().ARRAY_BUFFER, this.normalBuffer);
+	gl().vertexAttribPointer(this.shader.attribs["normal"],
+							 gl().FLOAT,
+							 false,
+							 0,
+							 0);
 
 	gl().bindBuffer(gl().ARRAY_BUFFER, this.colorBuffer);
 	gl().vertexAttribPointer(this.shader.attribs["color"],

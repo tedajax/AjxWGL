@@ -103,12 +103,30 @@ Terrain.prototype.BuildFromImage = function(img)
 
 		normal = Vec3.Cross(side1, side2);
 
-		this.normals[current++] = normal.x;
-		this.normals[current++] = normal.y;
-		this.normals[current++] = normal.z;
-	}
+		this.normals[i1 * 3 + 0] += normal.x;
+		this.normals[i1 * 3 + 1] += normal.y;
+		this.normals[i1 * 3 + 2] += normal.z;
 
-	console.log(this.vertices.length, this.normals.length);
+		this.normals[i2 * 3 + 0] += normal.x;
+		this.normals[i2 * 3 + 1] += normal.y;
+		this.normals[i2 * 3 + 2] += normal.z;
+
+		this.normals[i3 * 3 + 0] += normal.x;
+		this.normals[i3 * 3 + 1] += normal.y;
+		this.normals[i3 * 3 + 2] += normal.z;
+
+		// this.normals[i1 * 3 + 0] += 0;
+		// this.normals[i1 * 3 + 1] += 1;
+		// this.normals[i1 * 3 + 2] += 0;
+
+		// this.normals[i2 * 3 + 0] += 0;
+		// this.normals[i2 * 3 + 1] += 1;
+		// this.normals[i2 * 3 + 2] += 0;
+
+		// this.normals[i3 * 3 + 0] += 0;
+		// this.normals[i3 * 3 + 1] += 1;
+		// this.normals[i3 * 3 + 2] += 0;
+	}
 
 	this.CreateBuffers();
 
@@ -118,7 +136,7 @@ Terrain.prototype.BuildFromImage = function(img)
 	this.transform.scale = $V([1.0, 64.0, 1.0]);
 };
 
-Renderable.prototype.CreateBuffers = function()
+Terrain.prototype.CreateBuffers = function()
 {
 	this.vertexBuffer = R().CreateBuffer(this.vertices, gl().ARRAY_BUFFER, gl().STATIC_DRAW);
 	this.normalBuffer = R().CreateBuffer(this.normals, gl().ARRAY_BUFFER, gl().STATIC_DRAW);
@@ -145,6 +163,7 @@ Terrain.prototype.Render = function()
 
 	gl().bindBuffer(gl().ARRAY_BUFFER, this.normalBuffer);
 	gl().vertexAttribPointer(this.shader.attribs["normal"],
+							 this.normalBuffer.itemSize,
 							 gl().FLOAT,
 							 false,
 							 0,

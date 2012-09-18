@@ -22,7 +22,7 @@ function Game(canvas)
 
 	this.cameraSpeed = 25.0;
 
-	this.camera.transform.position = $V([0.0, 2.0, 10.0]);
+	this.camera.transform.position = $V([0.0, 25.0, 0.0]);
 };
 
 Game.prototype.Initialize = function()

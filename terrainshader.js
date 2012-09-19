@@ -9,6 +9,7 @@ function TerrainShader()
 	this.pMatrix = Matrix.I(4);
 	this.vMatrix = Matrix.I(4);
 	this.wMatrix = Matrix.I(4);
+	this.wMatrixNoRotation = Matrix.I(4);
 	this.nMatrix = Matrix.I(4);
 
 	this.ambientColor = [0.2, 0.2, 0.2];
@@ -71,7 +72,7 @@ TerrainShader.prototype.DrawSetup = function()
 	gl().useProgram(this.program);
 	gl().uniformMatrix4fv(this.uniforms["world"], false, new Float32Array(this.wMatrix.flatten()));
 
-	this.nMatrix = this.vMatrix.x(this.wMatrix);
+	this.nMatrix = this.vMatrix.x(this.wMatrixNoRotation);
 	this.nMatrix = this.nMatrix.inverse();
 	this.nMatrix = this.nMatrix.transpose();
 
@@ -81,8 +82,8 @@ TerrainShader.prototype.DrawSetup = function()
 	gl().uniform3fv(this.uniforms["camera_position"], camArray);
 
 	var lightDir = $V([this.lightingDirection[0], this.lightingDirection[1], this.lightingDirection[2], 1.0]);
-	lightDir = this.nMatrix.multiply(lightDir);
-	var adjustedLD = lightDir.toUnitVector().x(-1).to3D().flatten();
+	//lightDir = this.nMatrix.inverse().transpose().multiply(lightDir);
+	var adjustedLD = lightDir.toUnitVector().x(1).to3D().flatten();
 	gl().uniform3fv(this.uniforms["lighting_direction"], adjustedLD);
 
 	gl().uniform3fv(this.uniforms["ambient_color"], this.ambientColor);

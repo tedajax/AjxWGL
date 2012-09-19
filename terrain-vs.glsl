@@ -28,7 +28,7 @@ void main()
 
 	vVertexPosition = aVertexPosition;
 	vVertexColor = aVertexColor;	
-	vVertexNormal = uNormal * normalize(vec4(aVertexNormal, 1.0));
+	vVertexNormal = normalize(uWorld * vec4(aVertexNormal, 1.0));
 
 	vLightingDirection = uLightingDirection;
 	vAmbientColor = uAmbientColor;

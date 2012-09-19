@@ -2,11 +2,13 @@
 	precision highp float;
 #endif
 
+uniform vec3 uLightingDirection;
+
 varying vec3 vVertexPosition;
 varying vec4 vVertexNormal;
 varying vec4 vVertexColor;
 
-varying vec3 vLightingDirection;
+
 varying vec3 vAmbientColor;
 varying vec3 vDirectionalColor;
 
@@ -23,7 +25,7 @@ void main()
 	else
 		color = vec4(1.0, 1.0, 1.0, 1.0) * vVertexColor;
 
-	float directionalLightWeighting = max(dot(vVertexNormal.xyz, normalize(vLightingDirection)), 0.0) * 100.0;	
+	float directionalLightWeighting = max(dot(vVertexNormal.xyz, uLightingDirection), 0.0) * 100.0;	
 
 	vec3 lightWeighting = vAmbientColor + vDirectionalColor * directionalLightWeighting;
 

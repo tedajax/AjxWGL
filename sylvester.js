@@ -78,6 +78,10 @@ Sylvester.Vector.prototype = {
     return this.map(function(x) { return x/r; });
   },
 
+  negate: function() {
+    return this.map(function(x) { return -x; });
+  },
+
   toUnitVector: function() {
     var r = this.modulus();
     if (r === 0) { return this.dup(); }

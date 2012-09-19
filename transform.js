@@ -20,6 +20,14 @@ Transform.prototype.GetWorldMatrix = function()
 	return this.world;
 };
 
+Transform.prototype.GetWorldMatrixNoRotation = function()
+{
+	var tMat = Matrix.Translation(this.position);
+	var sMat = Matrix.Scale(this.scale);
+
+	return sMat.x(tMat);
+};
+
 Transform.prototype.TransformUnitVector = function(unitv)
 {
 	return Matrix.YawPitchRoll(this.rotation).x(unitv);

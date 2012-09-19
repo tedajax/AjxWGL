@@ -11,6 +11,6 @@ function TerrainController()
 
 TerrainController.prototype.Update = function()
 {
-	this.transform.rotation = this.transform.rotation.add(Vector.UP.to3D().x(0 * Time.Delta()));
+	this.transform.rotation = this.transform.rotation.add(Vector.UP.to3D().x(-10 * Time.Delta()));
 	this.model.transform = this.transform;
 };

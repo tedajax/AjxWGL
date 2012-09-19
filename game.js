@@ -14,7 +14,7 @@ function Game(canvas)
 	this.terrainfx = Shaders().PushShader(new TerrainShader());
 
 	this.gameObjects = [];
-	this.gameObjects.push(new Spinner());
+	//this.gameObjects.push(new Spinner());
 	//this.gameObjects.push(new Cube());
 	//this.gameObjects.push(new GLQuad());
 

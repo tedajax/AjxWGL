@@ -87,12 +87,15 @@ Terrain.prototype.BuildFromImage = function(img)
 		}
 	}
 
+	for (var i = 0, len = this.vertices.length; i < len; i++)
+		this.normals[i] = 0.0;
+
 	current = 0;
 	for (var i = 0, len = this.indices.length / 3; i < len; i++)
 	{
-		i1 = this.indices[i * 3];
-		i2 = this.indices[i * 3 + 1];
-		i3 = this.indices[i * 3 + 2];
+		i1 = this.indices[i * 3 + 0] * 3;
+		i2 = this.indices[i * 3 + 1] * 3;
+		i3 = this.indices[i * 3 + 2] * 3;
 
 		vertex1 = new Vec3(this.vertices[i1 + 0], this.vertices[i1 + 1], this.vertices[i1 + 2]);
 		vertex2 = new Vec3(this.vertices[i2 + 0], this.vertices[i2 + 1], this.vertices[i2 + 2]);
@@ -103,17 +106,23 @@ Terrain.prototype.BuildFromImage = function(img)
 
 		normal = Vec3.Cross(side1, side2);
 
-		this.normals[i1 * 3 + 0] += normal.x;
-		this.normals[i1 * 3 + 1] += normal.y;
-		this.normals[i1 * 3 + 2] += normal.z;
+		//if (i % 1000 === 0) console.log(this.normals[i+0], this.normals[i+1], this.normals[i+2]);
 
-		this.normals[i2 * 3 + 0] += normal.x;
-		this.normals[i2 * 3 + 1] += normal.y;
-		this.normals[i2 * 3 + 2] += normal.z;
+		if (i % 1000 === 0) console.log(normal.x, normal.y, normal.z);
 
-		this.normals[i3 * 3 + 0] += normal.x;
-		this.normals[i3 * 3 + 1] += normal.y;
-		this.normals[i3 * 3 + 2] += normal.z;
+		if (normal.x == "NaN" || normal.y == "NaN" || normal.z == "NaN") console.log("error: ", i, normal.x, normal.y, normal.z);
+
+		this.normals[i1 + 0] += normal.x;
+		this.normals[i1 + 1] += normal.y;
+		this.normals[i1 + 2] += normal.z;
+
+		this.normals[i2 + 0] += normal.x;
+		this.normals[i2 + 1] += normal.y;
+		this.normals[i2 + 2] += normal.z;
+
+		this.normals[i3 + 0] += normal.x;
+		this.normals[i3 + 1] += normal.y;
+		this.normals[i3 + 2] += normal.z;
 
 		// this.normals[i1 * 3 + 0] += 0;
 		// this.normals[i1 * 3 + 1] += 1;
@@ -126,6 +135,15 @@ Terrain.prototype.BuildFromImage = function(img)
 		// this.normals[i3 * 3 + 0] += 0;
 		// this.normals[i3 * 3 + 1] += 1;
 		// this.normals[i3 * 3 + 2] += 0;
+	}
+
+	for (var i = 0, len = this.normals.length; i < len; i += 3)
+	{
+		normal = new Vec3(this.normals[i + 0], this.normals[i + 1], this.normals[i + 2]);
+		normal.Normalize();
+		this.normals[i + 0] = normal.x;
+		this.normals[i + 1] = normal.y;
+		this.normals[i + 2] = normal.z;
 	}
 
 	this.CreateBuffers();

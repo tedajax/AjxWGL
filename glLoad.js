@@ -20,7 +20,7 @@ function GL(canvas)
 	this.context.viewportWidth = canvas.width;
 	this.context.viewportHeight = canvas.height;
 
-	this.context = WebGLDebugUtils.makeDebugContext(this.context, logGLCall, undefined);
+	this.context = WebGLDebugUtils.makeDebugContext(this.context, throwOnGLError, undefined);
 };
 
 GL.GetInstance = function(canvas) 

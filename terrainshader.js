@@ -14,7 +14,9 @@ function TerrainShader()
 	this.ambientColor = [0.2, 0.2, 0.2];
 	this.directionalColor = [1.0, 1.0, 1.0];
 	this.specularColor = [1.0, 1.0, 0.867];
-	this.lightingDirection = [1.0, 1.0, 1.0];
+	this.lightingDirection = [1.0, 20.0, 1.0];
+
+	this.lightTime = 0.0;
 
 	this.InitLocales();
 };
@@ -61,16 +63,22 @@ TerrainShader.prototype.FrameDrawSetup = function()
 
 TerrainShader.prototype.DrawSetup = function()
 {
+	//this.lightTime -= Math.PI / 2 * Time.Delta();
+
+	this.lightingDirection[0] = Math.cos(this.lightTime);
+	this.lightingDirection[2] = Math.sin(this.lightTime);
+
 	gl().useProgram(this.program);
 	gl().uniformMatrix4fv(this.uniforms["world"], false, new Float32Array(this.wMatrix.flatten()));
 
-	this.nMatrix = this.vMatrix.x(this.wMatrix).inverse();
+	this.nMatrix = this.vMatrix.x(this.wMatrix);
+	this.nMatrix = this.nMatrix.inverse();
 	this.nMatrix = this.nMatrix.transpose();
 
 	gl().uniformMatrix4fv(this.uniforms["normal"], false, new Float32Array(this.nMatrix.flatten()));
 
-	camArray = game.camera.transform.position.flatten();
-	gl().uniform3f(this.uniforms["camera_position"], camArray[0], camArray[1], camArray[2]);
+	camArray = game.camera.transform.position.to3D().flatten();
+	gl().uniform3fv(this.uniforms["camera_position"], camArray);
 
 	var lightDir = $V([this.lightingDirection[0], this.lightingDirection[1], this.lightingDirection[2], 1.0]);
 	lightDir = this.nMatrix.multiply(lightDir);

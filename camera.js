@@ -7,7 +7,7 @@ function Camera()
 
 	this.cameraType = Camera.PERSPECTIVE;
 
-	this.fov = 70;
+	this.fov = 80;
 	this.aspect = gl().viewportWidth / gl().viewportHeight;
 	this.near = 0.1;
 	this.far = 1000;

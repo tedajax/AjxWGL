@@ -169,7 +169,7 @@ Terrain.prototype.Render = function()
 	gl().useProgram(this.shader.program);
 
 	this.shader.wMatrix = this.transform.GetWorldMatrix();
-	this.shader.wMatrixNoRotation = this.transform.GetWorldMatrixNoRotation();
+	this.shader.transform = this.transform;
 	this.shader.DrawSetup();
 
 	gl().bindBuffer(gl().ARRAY_BUFFER, this.vertexBuffer);

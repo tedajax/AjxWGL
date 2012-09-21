@@ -8,9 +8,11 @@ varying vec3 vVertexPosition;
 varying vec4 vVertexNormal;
 varying vec4 vVertexColor;
 
+uniform vec3 uAmbientColor;
+uniform vec3 uDirectionalColor;
 
-varying vec3 vAmbientColor;
-varying vec3 vDirectionalColor;
+//varying vec3 vAmbientColor;
+//varying vec3 vDirectionalColor;
 
 void main()
 {
@@ -27,7 +29,7 @@ void main()
 
 	float directionalLightWeighting = max(dot(vVertexNormal.xyz, uLightingDirection), 0.0) * 100.0;	
 
-	vec3 lightWeighting = vAmbientColor + vDirectionalColor * directionalLightWeighting;
+	vec3 lightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
 
 	gl_FragColor = color * vec4(lightWeighting, 1.0);
 }

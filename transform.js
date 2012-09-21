@@ -20,13 +20,21 @@ Transform.prototype.GetWorldMatrix = function()
 	return this.world;
 };
 
-Transform.prototype.GetWorldMatrixNoRotation = function()
+Transform.prototype.GetWorldMatrixNoTranslation = function()
 {
-	var tMat = Matrix.Translation(this.position);
+	var rMat = Matrix.YawPitchRoll(this.rotation);
 	var sMat = Matrix.Scale(this.scale);
 
-	return sMat.x(tMat);
+	return sMat.x(rMat);
 };
+
+Transform.prototype.GetWorldMatrixReverseRotationNoTranslation = function()
+{
+	var rMat = Matrix.YawPitchRoll(this.rotation.negate());
+	var sMat = Matrix.Scale(this.scale);
+
+	return sMat.x(rMat);
+}
 
 Transform.prototype.TransformUnitVector = function(unitv)
 {

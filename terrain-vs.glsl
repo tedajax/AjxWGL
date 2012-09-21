@@ -18,21 +18,16 @@ varying vec3 vVertexPosition;
 varying vec4 vVertexNormal;
 varying vec4 vVertexColor;
 
-varying vec3 vLightingDirection;
-varying vec3 vAmbientColor;
-varying vec3 vDirectionalColor;
-
 void main()
 {
 	mat4 uModelView = uView * uWorld;
 
 	vVertexPosition = aVertexPosition;
 	vVertexColor = aVertexColor;	
-	vVertexNormal = normalize(uWorld * vec4(aVertexNormal, 1.0));
+	vVertexNormal = normalize(uNormal * vec4(aVertexNormal, 1.0));
 
-	vLightingDirection = uLightingDirection;
-	vAmbientColor = uAmbientColor;
-	vDirectionalColor = uDirectionalColor;
+	//vAmbientColor = uAmbientColor;
+	//vDirectionalColor = uDirectionalColor;
 
 	gl_Position = uProjection * uModelView * vec4(aVertexPosition, 1.0);
 

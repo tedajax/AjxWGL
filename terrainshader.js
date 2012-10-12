@@ -49,6 +49,7 @@ TerrainShader.prototype.InitLocales = function()
 	this.AddUniform("specular_color", "uSpecularColor");
 	this.AddUniform("lighting_direction", "uLightingDirection");
 	this.AddUniform("camera_position", "uCameraPos");
+	this.AddUniform("max_height", "uMaxHeight");
 };
 
 TerrainShader.prototype.FrameDrawSetup = function()
@@ -64,7 +65,7 @@ TerrainShader.prototype.FrameDrawSetup = function()
 
 TerrainShader.prototype.DrawSetup = function()
 {
-	//this.lightTime -= Math.PI / 2 * Time.Delta();
+	this.lightTime -= Math.PI / 2 * Time.Delta();
 
 	this.lightingDirection[0] = Math.cos(this.lightTime);
 	this.lightingDirection[2] = Math.sin(this.lightTime);
@@ -83,11 +84,13 @@ TerrainShader.prototype.DrawSetup = function()
 
 	var lightDir = $V([this.lightingDirection[0], this.lightingDirection[1], this.lightingDirection[2], 1.0]);
 	lightDir = lightDir.toUnitVector();
-	lightDir = this.transform.GetWorldMatrixNoTranslation().inverse().multiply(lightDir);
+	lightDir = Matrix.Translation(this.transform.position).multiply(lightDir);
 	var adjustedLD = lightDir.toUnitVector().x(-1).to3D().flatten();
 	gl().uniform3fv(this.uniforms["lighting_direction"], adjustedLD);
 
 	gl().uniform3fv(this.uniforms["ambient_color"], this.ambientColor);
 	gl().uniform3fv(this.uniforms["directional_color"], this.directionalColor);
 	gl().uniform3fv(this.uniforms["specular_color"], this.specularColor);
+
+	gl().uniform1f(this.uniforms["max_height"], 64.0);
 };

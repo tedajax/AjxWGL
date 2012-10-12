@@ -11,6 +11,8 @@ varying vec4 vVertexColor;
 uniform vec3 uAmbientColor;
 uniform vec3 uDirectionalColor;
 
+uniform float uMaxHeight;
+
 //varying vec3 vAmbientColor;
 //varying vec3 vDirectionalColor;
 
@@ -18,16 +20,16 @@ void main()
 {
 	vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
 
-	if (vVertexPosition.y < 0.25)
+	if (vVertexPosition.y < 0.25 * uMaxHeight)
 		color = vec4(0.0, 0.0, 1.0, 1.0) * vVertexColor;
-	else if (vVertexPosition.y < 0.35)
+	else if (vVertexPosition.y < 0.35 * uMaxHeight)
 		color = vec4(0.95, 0.5, 0.25, 1.0) * vVertexColor;
-	else if (vVertexPosition.y < 0.8)
+	else if (vVertexPosition.y < 0.8 * uMaxHeight)
 		color = vec4(0.0, 0.6, 0.0, 1.0) * vVertexColor;
 	else
 		color = vec4(1.0, 1.0, 1.0, 1.0) * vVertexColor;
 
-	float directionalLightWeighting = max(dot(vVertexNormal.xyz, uLightingDirection), 0.0) * 100.0;	
+	float directionalLightWeighting = max(dot(vVertexNormal.xyz, uLightingDirection), 0.0) * 1.0;	
 
 	vec3 lightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
 
